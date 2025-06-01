@@ -12,5 +12,22 @@ export class UsersService {
         });
         return user;
     }
+    async delete(id: number) {
+        const userExists = await this.prisma.users.findUnique({
+            where: {
+                id,
+            }
+        });
+        if (!userExists) { 
+            throw new Error('Usuário nao existe');
+        }
+        return await this.prisma.users.delete({
+            where: {
+                id,
+            }
+        })
+    }
+
+    
 }
 
