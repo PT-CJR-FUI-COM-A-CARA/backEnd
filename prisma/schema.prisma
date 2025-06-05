@@ -17,6 +17,7 @@ model Users {
   email String @unique
   senha String
   avaliacoes Avaliacoes[]
+  comentarios Comentarios[]
 
 }
 
@@ -34,4 +35,15 @@ model Avaliacoes {
   userId Int
   prof Professores @relation(fields: [profId], references: [id])
   profId Int
+  comentarios Comentarios[]
+}
+
+model Comentarios {
+  id Int @id @default(autoincrement())
+  usersId Int
+  conteudo String
+  avaliacaoId Int
+  user Users @relation(fields: [usersId], references: [id])
+  avaliacao Avaliacoes @relation(fields: [avaliacaoId], references: [id])
+
 }
