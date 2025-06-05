@@ -5,9 +5,10 @@ import { UsersController } from './users/users.controller';
 import { ProfessoresService } from './professores/professores.service';
 import { ProfessoresController } from './professores/professores.controller';
 import { ProfessoresModule } from './professores/professores.module';
+import { PrismaModule } from './database/prisma.module';
 
 @Module({
-  imports: [UsersModule, ProfessoresModule],
+  imports: [UsersModule, ProfessoresModule, PrismaModule],
   controllers: [ UsersController, ProfessoresController],
   providers: [UsersService, ProfessoresService],
 })
