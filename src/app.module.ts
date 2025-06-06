@@ -9,7 +9,7 @@ import { PrismaModule } from './database/prisma.module';
 
 @Module({
   imports: [UsersModule, ProfessoresModule, PrismaModule],
-  controllers: [ UsersController, ProfessoresController],
+  controllers: [UsersController, ProfessoresController],
   providers: [UsersService, ProfessoresService],
 })
 export class AppModule {}

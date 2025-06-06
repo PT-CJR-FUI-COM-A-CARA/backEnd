@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { UsersDto } from './dto/users.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as bcrypt from 'bcrypt';
+
 
 @Injectable()
 export class UsersService {
@@ -19,6 +22,7 @@ export class UsersService {
 }
 
     async FindAll() {
+
         return await this.prisma.users.findMany();
 }
 
