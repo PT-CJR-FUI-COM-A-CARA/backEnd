@@ -44,6 +44,12 @@ if (updateData.nome) {
 if (updateData.email) {
     dataToUpdateInPrisma.email = updateData.email;
 }
+if (updateData.departamento) {
+    dataToUpdateInPrisma.departamento = updateData.departamento;
+}
+if (updateData.curso) {
+    dataToUpdateInPrisma.curso = updateData.curso;
+}
 const updateUser = await this.prisma.users.update({
     where: { id },
     data: dataToUpdateInPrisma,

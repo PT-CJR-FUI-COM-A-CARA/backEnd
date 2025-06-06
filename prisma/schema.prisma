@@ -16,6 +16,8 @@ model Users {
   nome String 
   email String @unique
   senha String
+  departamento String
+  curso String
   avaliacoes Avaliacoes[]
   comentarios Comentarios[]
 
