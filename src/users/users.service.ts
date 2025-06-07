@@ -50,6 +50,10 @@ if (updateData.departamento) {
 if (updateData.curso) {
     dataToUpdateInPrisma.curso = updateData.curso;
 }
+if (updateData.senha){
+    const senhanova = await bcrypt.hash(updateData.senha, 10)
+    dataToUpdateInPrisma.senha = senhanova;
+}
 const updateUser = await this.prisma.users.update({
     where: { id },
     data: dataToUpdateInPrisma,
