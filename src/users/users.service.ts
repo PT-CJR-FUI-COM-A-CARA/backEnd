@@ -50,7 +50,8 @@ if (updateData.curso) {
     dataToUpdateInPrisma.curso = updateData.curso;
 }
 if (updateData.senha){
-    const senhanova = await bcrypt.hash(updateData.senha, 10)
+    const saltRounds = 10;
+    const senhanova = await bcrypt.hash(updateData.senha, saltRounds)
     dataToUpdateInPrisma.senha = senhanova;
 }
 const updateUser = await this.prisma.users.update({
@@ -64,7 +65,7 @@ return result;
     const userExists = await this.prisma.users.findUnique({
         where: {
         id,
-      },
+    },
     });
     if (!userExists) {
         throw new Error('Usuário nao existe');
@@ -72,8 +73,13 @@ return result;
     return await this.prisma.users.delete({
         where: {
         id,
-      },
+    },
     });
-  }
+}
+    async findByEmail(email: string) {
+        return this.prisma.users.findUnique({
+            where: {email},
+        });
+    }
 
 }
