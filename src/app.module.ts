@@ -6,10 +6,13 @@ import { ProfessoresService } from './professores/professores.service';
 import { ProfessoresController } from './professores/professores.controller';
 import { ProfessoresModule } from './professores/professores.module';
 import { PrismaModule } from './database/prisma.module';
+import { AuthService } from './auth/auth.service';
+import { AuthController } from './auth/auth.controller';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [UsersModule, ProfessoresModule, PrismaModule],
-  controllers: [UsersController, ProfessoresController],
-  providers: [UsersService, ProfessoresService],
+  imports: [UsersModule, ProfessoresModule, PrismaModule, AuthModule],
+  controllers: [UsersController, ProfessoresController, AuthController],
+  providers: [UsersService, ProfessoresService, AuthService],
 })
 export class AppModule {}

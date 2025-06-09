@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { UsersDto } from './dto/users.dto';
@@ -11,7 +9,8 @@ import * as bcrypt from 'bcrypt';
 export class UsersService {
     constructor(private prisma: PrismaService) {}
     async create(data: UsersDto) {
-        const senhaHash = await bcrypt.hash(data.senha, 10)
+        const saltRounds = 10;
+        const senhaHash = await bcrypt.hash(data.senha, saltRounds);
         const user = await this.prisma.users.create({
         data:{ 
     ...data,
@@ -76,4 +75,5 @@ return result;
       },
     });
   }
+
 }
