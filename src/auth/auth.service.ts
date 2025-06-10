@@ -1,11 +1,32 @@
 import { Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt';
+import { UsersDto } from 'src/users/dto/users.dto';
+import { UserPayload } from './guards/models/userPayload';
+import { JwtService } from '@nestjs/jwt';
+import { UserToken } from './guards/models/UserToken';
 
 
 @Injectable()
 export class AuthService {
-    constructor(private readonly userService: UsersService) {}
+    
+    constructor(private readonly userService: UsersService, private readonly jwtService: JwtService) {}
+
+
+    login(user: UsersDto): UserToken {
+        const payload: UserPayload = {
+            sub: user.id!,
+            email: user.email,
+            nome: user.nome,
+        };
+        const jwtToken = this.jwtService.sign(payload);
+        
+        return {
+            access_token: jwtToken,
+        }
+    }
+
+
     async validateUser(email: string, senha: string){
         const user = await this.userService.findByEmail(email);
         
@@ -18,6 +39,6 @@ export class AuthService {
             }
         };
         }
-        throw new Error('email ou senha inválida')
+        throw new Error('email ou senha inválidas')
     }
 }

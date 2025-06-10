@@ -20,7 +20,7 @@ export class UsersController {
   async create(@Body() data: UsersDto) {
     return this.userService.create(data);
   }
-
+  
   @Get()
   async findAll() {
     return this.userService.FindAll();
