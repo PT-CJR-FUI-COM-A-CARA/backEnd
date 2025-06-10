@@ -9,9 +9,13 @@ import { AuthService } from './auth/auth.service';
 import { AuthController } from './auth/auth.controller';
 import { AuthModule } from './auth/auth.module';
 import { ProfessoresService } from './professores/professores.service';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
-  imports: [UsersModule, ProfessoresModule, PrismaModule, AuthModule],
+  imports: [UsersModule, ProfessoresModule, PrismaModule, AuthModule, JwtModule.register({
+    secret: process.env.JWT_SECRET,
+    signOptions: {  expiresIn: '1h'}
+  })],
   controllers: [UsersController, ProfessoresController, AuthController],
   providers: [UsersService, AuthService, ProfessoresService],
 })
