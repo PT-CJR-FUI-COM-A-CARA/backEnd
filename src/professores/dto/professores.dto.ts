@@ -1,5 +1,5 @@
 export type ProfessoresDto = {
-  id?: number;
-  nome: string;
-  materia: string;
+    id?: number;
+    nome: string;
+    materia: string;
 };
