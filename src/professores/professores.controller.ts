@@ -18,7 +18,7 @@ export class ProfessoresController {
     constructor(private readonly professoresService: ProfessoresService) {}
     
       @Post()
-      async create(@Body()nome: string, @Body()materia: string) {
-        return this.professoresService.create(nome, materia);
+      async create(@Body() data: ProfessoresDto) {
+        return this.professoresService.create(data);
       }
 }

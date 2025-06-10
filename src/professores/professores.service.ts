@@ -5,9 +5,10 @@ import { ProfessoresDto } from './dto/professores.dto';
 @Injectable()
 export class ProfessoresService {
     constructor(private prisma: PrismaService) {}
-    async create(nome: string, materia: string) {
-        const professor = await this.prisma.professores.create({data: {
-            nome, materia},});
+    async create(data: ProfessoresDto) {
+        const professor = await this.prisma.professores.create({
+            data: data,
+        });
 
         return professor;
     }
