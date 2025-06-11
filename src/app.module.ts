@@ -10,6 +10,8 @@ import { AuthController } from './auth/auth.controller';
 import { AuthModule } from './auth/auth.module';
 import { ProfessoresService } from './professores/professores.service';
 import { JwtModule } from '@nestjs/jwt';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 
 @Module({
   imports: [UsersModule, ProfessoresModule, PrismaModule, AuthModule, JwtModule.register({
@@ -17,6 +19,9 @@ import { JwtModule } from '@nestjs/jwt';
     signOptions: {  expiresIn: '1h'}
   })],
   controllers: [UsersController, ProfessoresController, AuthController],
-  providers: [UsersService, AuthService, ProfessoresService],
+  providers: [UsersService, AuthService, ProfessoresService, {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },],
 })
 export class AppModule {}
