@@ -27,6 +27,7 @@ model Professores {
   id Int @id @default(autoincrement())
   nome String @unique
   materia String
+  departamento String
   avaliacoes Avaliacoes[]
 }
 

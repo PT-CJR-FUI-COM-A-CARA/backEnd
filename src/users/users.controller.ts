@@ -5,7 +5,7 @@ import {
   Get,
   Param,
   Delete,
-  Put,
+  Patch,
   ParseIntPipe,
 } from '@nestjs/common';
 import { UsersDto } from './dto/users.dto';
@@ -21,21 +21,19 @@ export class UsersController {
   async create(@Body() data: UsersDto) {
     return this.userService.create(data);
   }
-  
   @Get()
   async findAll() {
     return this.userService.FindAll();
   }
 
-  @Put(':id')
+  @Patch(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateData: UpdateUserDto,) {
     return this.userService.update(id, updateData);
   }
-
   @Delete(':id') // nao sei se vou manter o delete assim pois vai ser o próprio usuário q vai deletar a conta ent nsei se vai ser necessário fazer procurando o id
-  async delete(@Param('id') id: number) {
+  async delete(@Param('id', ParseIntPipe) id: number) {
     return this.userService.delete(Number(id));
   }
 }

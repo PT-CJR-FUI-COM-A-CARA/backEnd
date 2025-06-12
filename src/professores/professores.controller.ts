@@ -3,23 +3,43 @@ import {
   Controller,
   Post,
   Get,
-  Param,
   Delete,
-  Put,
+  Param,
   ParseIntPipe,
+  Patch,
 } from '@nestjs/common';
 import { ProfessoresDto } from './dto/professores.dto';
 import { ProfessoresService } from './professores.service';
+import { IsPublic } from 'src/auth/decorators/is-public.decorator';
+import { ProfessoresDtoUpdate } from './dto/update-professores.dto';
 
 
 
 @Controller('professores')
 export class ProfessoresController {
     constructor(private readonly professoresService: ProfessoresService) {}
-      // n esqucer de botar o decorador ispublic para as funcções q n precisa de autorização para testar
-      // john qnd tu for testar no thunder client se ta funcionando usa o decorador ispublic pra vc ter q precisar gerar um token, dps só apaga ele no final
+      @IsPublic()
       @Post()
       async create(@Body() data: ProfessoresDto) {
         return this.professoresService.create(data);
       }
+
+      @IsPublic()
+      @Get()
+      async findAll(){
+        return this.professoresService.findAll();
+      }
+      
+      @IsPublic()
+      @Delete(':id')
+      async delete(@Param('id', ParseIntPipe) id: number){
+        return this.professoresService.delete(id);
+      }
+      @IsPublic()
+      @Patch(':id')
+      async update(@Param('id', ParseIntPipe) id: number, @Body() updateData: ProfessoresDtoUpdate){
+        return this.professoresService.update(id, updateData);
+      }
+      
+
 }

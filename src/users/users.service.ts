@@ -36,31 +36,31 @@ export class UsersService {
         throw new Error('Usuario não encontrado');
     }
 
-const dataToUpdateInPrisma: any = {};
-if (updateData.nome) {
-    dataToUpdateInPrisma.nome = updateData.nome;
-}
-if (updateData.email) {
-    dataToUpdateInPrisma.email = updateData.email;
-}
-if (updateData.departamento) {
-    dataToUpdateInPrisma.departamento = updateData.departamento;
-}
-if (updateData.curso) {
-    dataToUpdateInPrisma.curso = updateData.curso;
-}
-if (updateData.senha){
-    const saltRounds = 10;
-    const senhanova = await bcrypt.hash(updateData.senha, saltRounds)
-    dataToUpdateInPrisma.senha = senhanova;
-}
-const updateUser = await this.prisma.users.update({
-    where: { id },
-    data: dataToUpdateInPrisma,
-});
-const {senha, ...result} = updateUser;
-return result;
-}
+    const dataToUpdateInPrisma: any = {};
+    if (updateData.nome) {
+        dataToUpdateInPrisma.nome = updateData.nome;
+    }
+    if (updateData.email) {
+        dataToUpdateInPrisma.email = updateData.email;
+    }
+    if (updateData.departamento) {
+        dataToUpdateInPrisma.departamento = updateData.departamento;
+    }
+    if (updateData.curso) {
+        dataToUpdateInPrisma.curso = updateData.curso;
+    }
+    if (updateData.senha){
+        const saltRounds = 10;
+        const senhanova = await bcrypt.hash(updateData.senha, saltRounds)
+        dataToUpdateInPrisma.senha = senhanova;
+    }
+    const updateUser = await this.prisma.users.update({
+        where: { id },
+        data: dataToUpdateInPrisma,
+    });
+    const {senha, ...result} = updateUser;
+    return result;
+    }
     async delete(id: number) {
     const userExists = await this.prisma.users.findUnique({
         where: {
