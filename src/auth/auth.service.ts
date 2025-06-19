@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt';
 import { UsersDto } from 'src/users/dto/users.dto';
-import { UserPayload } from './guards/models/userPayload';
+import { UserPayload } from './models/userPayload';
 import { JwtService } from '@nestjs/jwt';
-import { UserToken } from './guards/models/UserToken';
+import { UserToken } from './models/UserToken';
 
 
 @Injectable()

@@ -25,6 +25,17 @@ export class UsersService {
         return await this.prisma.users.findMany();
 }
 
+    async FindOne(id: number) {
+        if(!id){
+            throw new Error('Usuario não encontrado')
+        }
+        return await this.prisma.users.findUnique({
+        where: {
+        id,
+    },
+    });
+}
+
     async update(id: number, updateData: UpdateUserDto) {
     const userExists = await this.prisma.users.findUnique({
         where: {

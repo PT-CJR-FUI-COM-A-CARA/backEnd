@@ -26,6 +26,12 @@ export class UsersController {
     return this.userService.FindAll();
   }
 
+  @IsPublic()
+  @Get(':id')
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.userService.FindOne(Number(id));
+  }
+
   @Patch(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,

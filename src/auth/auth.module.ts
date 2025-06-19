@@ -6,7 +6,6 @@ import { UsersModule } from 'src/users/users.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { JwtStrategy } from './estrategies/jwt.strategy';
-import { LoginValidationMiddleware } from './middlewares/login-validation.middleware';
 
 @Module({
   imports: [UsersModule, PassportModule, JwtModule, JwtModule.register({
@@ -16,8 +15,4 @@ import { LoginValidationMiddleware } from './middlewares/login-validation.middle
   controllers: [AuthController],
   providers: [AuthService, LocalStrategy, JwtStrategy]
 })
-export class AuthModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoginValidationMiddleware).forRoutes('login');
-  }
-}
+export class AuthModule {}

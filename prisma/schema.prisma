@@ -20,7 +20,7 @@ model Users {
   curso String
   avaliacoes Avaliacoes[]
   comentarios Comentarios[]
-
+  fotopsrc String?
 }
 
 model Professores {
@@ -29,6 +29,7 @@ model Professores {
   materia String
   departamento String
   avaliacoes Avaliacoes[]
+  fotopsrc String?
 }
 
 model Avaliacoes {
