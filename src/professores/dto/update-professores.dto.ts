@@ -3,4 +3,5 @@ export type ProfessoresDtoUpdate = {
     nome?: string;
     materia?: string;
     departamento?: string;
+    fotosrc?: string;
 }

@@ -38,7 +38,7 @@ export class UsersController {
     @Body() updateData: UpdateUserDto,) {
     return this.userService.update(id, updateData);
   }
-  @Delete(':id') // nao sei se vou manter o delete assim pois vai ser o próprio usuário q vai deletar a conta ent nsei se vai ser necessário fazer procurando o id
+  @Delete(':id')
   async delete(@Param('id', ParseIntPipe) id: number) {
     return this.userService.delete(Number(id));
   }

@@ -1,5 +1,3 @@
-
-
 export type UsersDto = {
   id?: number;
   nome: string;
@@ -7,4 +5,5 @@ export type UsersDto = {
   senha: string;
   departamento: string;
   curso: string;
+  fotosrc?: string;
 };

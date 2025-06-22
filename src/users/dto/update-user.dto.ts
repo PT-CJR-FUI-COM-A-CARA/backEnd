@@ -4,4 +4,5 @@ export type UpdateUserDto = {
     departamento?: string;
     curso?: string;
     senha?: string;
+    fotosrc?: string;
 }

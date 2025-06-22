@@ -20,16 +20,16 @@ model Users {
   curso String
   avaliacoes Avaliacoes[]
   comentarios Comentarios[]
-  fotopsrc String?
+  fotosrc String?
 }
 
 model Professores {
   id Int @id @default(autoincrement())
   nome String @unique
-  materia String
+  materias String
   departamento String
   avaliacoes Avaliacoes[]
-  fotopsrc String?
+  fotosrc String?
 }
 
 model Avaliacoes {
@@ -39,6 +39,7 @@ model Avaliacoes {
   userId Int
   prof Professores @relation(fields: [profId], references: [id])
   profId Int
+  data DateTime @default(now())
   comentarios Comentarios[]
 }
 

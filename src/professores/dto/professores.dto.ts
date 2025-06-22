@@ -3,4 +3,5 @@ export type ProfessoresDto = {
     nome: string;
     materia: string;
     departamento: string;
+    fotosrc: string;
 };

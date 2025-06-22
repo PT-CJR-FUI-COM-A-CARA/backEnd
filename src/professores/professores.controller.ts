@@ -29,6 +29,12 @@ export class ProfessoresController {
       async findAll(){
         return this.professoresService.findAll();
       }
+
+      @IsPublic()
+      @Get(':id')
+      async findOne(@Param('id', ParseIntPipe) id: number) {
+      return this.professoresService.FindOne(Number(id));
+      }
       
       @IsPublic()
       @Delete(':id')
