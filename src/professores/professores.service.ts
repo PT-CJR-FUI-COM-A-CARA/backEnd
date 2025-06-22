@@ -18,6 +18,17 @@ export class ProfessoresService {
         return await this.prisma.professores.findMany();
     }
 
+    async FindOne(id: number) {
+        if(!id){
+            throw new Error('Professor não encontrado')
+        }
+        return await this.prisma.professores.findUnique({
+        where: {
+        id,
+    },
+    });
+}
+
     async delete(id: number){
         const professorExists = await this.prisma.professores.findUnique({
             where: {
@@ -26,7 +37,7 @@ export class ProfessoresService {
         });
 
         if(!professorExists){
-            throw new Error('professor não existe');
+            throw new Error('Professor não existe');
         } 
 
         return await this.prisma.professores.delete({
@@ -44,7 +55,7 @@ export class ProfessoresService {
         });
 
         if(!professorExists){
-            throw new Error('professor não existe');
+            throw new Error('Professor não existe');
         } 
         
         const dataToUpdateInPrisma: any = {};
@@ -56,6 +67,9 @@ export class ProfessoresService {
     }
         if (updateData.departamento) {
         dataToUpdateInPrisma.departamento = updateData.departamento;
+    }
+        if (updateData.fotosrc) {
+        dataToUpdateInPrisma.fotosrc = updateData.fotosrc;
     }
         const updateProfessores = await this.prisma.professores.update({
         where: { id },

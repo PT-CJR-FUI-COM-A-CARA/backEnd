@@ -3,4 +3,5 @@ export type AvaliacoesDto = {
     avaliacao: string;
     userId: number;
     profId: number;
+    data?: string;
 }

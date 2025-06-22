@@ -65,6 +65,9 @@ export class UsersService {
         const senhanova = await bcrypt.hash(updateData.senha, saltRounds)
         dataToUpdateInPrisma.senha = senhanova;
     }
+    if (updateData.fotosrc) {
+        dataToUpdateInPrisma.fotosrc = updateData.fotosrc;
+    }
     const updateUser = await this.prisma.users.update({
         where: { id },
         data: dataToUpdateInPrisma,
