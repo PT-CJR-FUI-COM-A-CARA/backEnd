@@ -57,5 +57,4 @@ model Materias {
   id Int @id @default(autoincrement())
   nome String
   prof Professores[]
-  profId Int
 }

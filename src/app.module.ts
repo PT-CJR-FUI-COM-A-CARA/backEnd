@@ -15,12 +15,13 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { AvaliacoesController } from './avaliacoes/avaliacoes.controller';
 import { AvaliacoesModule } from './avaliacoes/avaliacoes.module';
 import { AvaliacoesService } from './avaliacoes/avaliacoes.service';
+import { MateriasModule } from './materias/materias.module';
 
 @Module({
   imports: [UsersModule, ProfessoresModule, PrismaModule, AuthModule, JwtModule.register({
     secret: process.env.JWT_SECRET,
     signOptions: {  expiresIn: '1h'}
-  }), AvaliacoesModule],
+  }), AvaliacoesModule, MateriasModule],
   controllers: [UsersController, ProfessoresController, AuthController, AvaliacoesController],
   providers: [UsersService, AuthService, ProfessoresService, {
       provide: APP_GUARD,
