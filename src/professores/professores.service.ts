@@ -62,8 +62,8 @@ export class ProfessoresService {
         if (updateData.nome) {
         dataToUpdateInPrisma.nome = updateData.nome;
     }
-    if (updateData.materia) {
-    dataToUpdateInPrisma.materia = updateData.materia;
+    if (updateData.materias) {
+    dataToUpdateInPrisma.materia = updateData.materias;
     }
         if (updateData.departamento) {
         dataToUpdateInPrisma.departamento = updateData.departamento;

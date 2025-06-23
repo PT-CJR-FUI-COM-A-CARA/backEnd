@@ -1,7 +1,7 @@
 export type ProfessoresDto = {
     id?: number;
     nome: string;
-    materia: string;
+    materias: string[];
     departamento: string;
     fotosrc: string;
 };
