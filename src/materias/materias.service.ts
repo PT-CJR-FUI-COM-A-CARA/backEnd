@@ -6,19 +6,21 @@ import { MateriasUpdateDto } from './dto/update-materias.dto';
 @Injectable()
 export class MateriasService {
     constructor(private prisma: PrismaService) {}
-        async create(data: MateriasDto) {
-            const materias = await this.prisma.materias.create({
-                data: {
-                nome: data.nome,
-                prof: { 
-                    connect: data.professoresIds.map(id => ({ id: id }))
-                }
+    async create(data: MateriasDto) {
+    const professoresIds = Array.isArray(data.professoresIds) ? data.professoresIds : [];
+    const materias = await this.prisma.materias.create({
+        data: {
+            nome: data.nome,
+            prof: {
+                connect: professoresIds.map(id => ({ id })),
             },
-            include: { prof: true } 
-        });
-    
-            return materias;
-        }
+        },
+        include: { prof: true },
+    });
+
+    return materias;
+    }
+
         async findAll(){
         return await this.prisma.materias.findMany({
             include: {
