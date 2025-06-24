@@ -53,7 +53,8 @@ export class AvaliacoesService {
         }
         if (updateData.avaliacao) {
     dataToUpdateInPrisma.avaliacao = updateData.avaliacao;
-}
+    }
+
     const updateAvaliacoes = await this.prisma.avaliacoes.update({
         where: { id },
         data: dataToUpdateInPrisma
