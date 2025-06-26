@@ -16,9 +16,10 @@ import { AvaliacoesController } from './avaliacoes/avaliacoes.controller';
 import { AvaliacoesModule } from './avaliacoes/avaliacoes.module';
 import { AvaliacoesService } from './avaliacoes/avaliacoes.service';
 import { MateriasModule } from './materias/materias.module';
+import { ComentarioModule } from './comentarios/comentarios.module';
 
 @Module({
-  imports: [UsersModule, ProfessoresModule, PrismaModule, AuthModule, JwtModule.register({
+  imports: [UsersModule, ProfessoresModule, ComentarioModule, PrismaModule, AuthModule, JwtModule.register({
     secret: process.env.JWT_SECRET,
     signOptions: {  expiresIn: '1h'}
   }), AvaliacoesModule, MateriasModule],
