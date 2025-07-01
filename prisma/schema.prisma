@@ -49,6 +49,7 @@ model Comentarios {
   usersId Int
   conteudo String
   avaliacaoId Int
+  data DateTime @default(now())
   user Users @relation(fields: [usersId], references: [id])
   avaliacao Avaliacoes @relation(fields: [avaliacaoId], references: [id])
 

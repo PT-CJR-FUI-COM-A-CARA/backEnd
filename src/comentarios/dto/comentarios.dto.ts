@@ -3,4 +3,5 @@ export type ComentarioDto = {
     usersId: number;
     conteudo: string;
     avaliacaoId: number;
+    data?: string;
 }
