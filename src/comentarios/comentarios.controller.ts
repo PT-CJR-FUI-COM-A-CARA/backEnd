@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Put, Delete, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Delete, Param, Post } from '@nestjs/common';
 import { ComentarioDto } from './dto/comentarios.dto';
 import { ComentariosService } from './comentarios.service';
 
@@ -23,7 +23,7 @@ export class ComentariosController {
     return { count };
     }
 
-    @Put(":id")
+    @Patch(":id")
     async update(@Param("id") id: number, @Body() data: ComentarioDto) {
         return this.comentariosService.update(Number(id), data);
 
