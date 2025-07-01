@@ -17,6 +17,12 @@ export class ComentariosController {
         return this.comentariosService.findAll()
     }
 
+    @Get('count/:avaliacaoId')
+    async countPorAvaliacao(@Param('avaliacaoId') avaliacaoId: string) {
+    const count = await this.comentariosService.countComentariosPorAvaliacao(Number(avaliacaoId));
+    return { count };
+    }
+
     @Put(":id")
     async update(@Param("id") id: number, @Body() data: ComentarioDto) {
         return this.comentariosService.update(Number(id), data);

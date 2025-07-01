@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
 import { ComentarioDto } from './dto/comentarios.dto';
 
+@Injectable()
 export class ComentariosService {
 
     constructor(private prisma: PrismaService){}
@@ -68,5 +69,11 @@ export class ComentariosService {
 
         return comentariosExists;
 
+    }
+
+    async countComentariosPorAvaliacao(avaliacaoId: number): Promise<number> {
+        return await this.prisma.comentarios.count({
+        where: { avaliacaoId }
+        });
     }
 }
