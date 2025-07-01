@@ -36,12 +36,11 @@ export class ProfessoresController {
       return this.professoresService.FindOne(Number(id));
       }
       
-      @IsPublic()
       @Delete(':id')
       async delete(@Param('id', ParseIntPipe) id: number){
         return this.professoresService.delete(id);
       }
-      @IsPublic()
+
       @Patch(':id')
       async update(@Param('id', ParseIntPipe) id: number, @Body() updateData: ProfessoresDtoUpdate){
         return this.professoresService.update(id, updateData);

@@ -15,7 +15,9 @@ export class ProfessoresService {
     }
     
     async findAll(){
-        return await this.prisma.professores.findMany();
+        return await this.prisma.professores.findMany({
+            include:{avaliacoes: true, materias: true}
+        });
     }
 
     async FindOne(id: number) {
@@ -26,6 +28,7 @@ export class ProfessoresService {
         where: {
         id,
     },
+    include:{avaliacoes: true, materias: true},
     });
 }
 
@@ -62,9 +65,7 @@ export class ProfessoresService {
         if (updateData.nome) {
         dataToUpdateInPrisma.nome = updateData.nome;
     }
-    if (updateData.materia) {
-    dataToUpdateInPrisma.materia = updateData.materia;
-    }
+
         if (updateData.departamento) {
         dataToUpdateInPrisma.departamento = updateData.departamento;
     }

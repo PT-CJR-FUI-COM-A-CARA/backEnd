@@ -16,7 +16,6 @@ import { AvaliacoesDtoUpdate } from './dto/update-avaliacoes.dto';
 @Controller('avaliacoes')
 export class AvaliacoesController {
     constructor(private readonly avaliacoesService: AvaliacoesService) {}
-    
     @Post()
     async create(@Body() data: AvaliacoesDto) {
         return this.avaliacoesService.create(data)
