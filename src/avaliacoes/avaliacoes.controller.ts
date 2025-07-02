@@ -26,6 +26,12 @@ export class AvaliacoesController {
         return this.avaliacoesService.findAll();
     }
     
+    @IsPublic()
+      @Get(':id')
+      async findOne(@Param('id', ParseIntPipe) id: number) {
+      return this.avaliacoesService.FindOne(Number(id));
+      }
+
     @Delete(':id')
     async delete(@Param('id', ParseIntPipe) id: number){
         return this.avaliacoesService.delete(id);
