@@ -62,4 +62,14 @@ export class AvaliacoesService {
     
     return updateAvaliacoes;
     }
+
+    async FindOne(id: number) {
+        if(!id){
+            throw new Error('Avaliação não encontrado')
+        }
+        return await this.prisma.avaliacoes.findUnique({
+        where: {
+        id,
+    }});
+}
 }

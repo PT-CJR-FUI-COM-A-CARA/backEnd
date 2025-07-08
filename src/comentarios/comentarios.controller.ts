@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Put, Delete, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Delete, Param, Post, Query } from '@nestjs/common';
 import { ComentarioDto } from './dto/comentarios.dto';
 import { ComentariosService } from './comentarios.service';
+import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 
 @Controller ('comentarios')
 
@@ -11,19 +12,22 @@ export class ComentariosController {
     async create(@Body() data: ComentarioDto){
         return this.comentariosService.create(data);
     }
-
+    @IsPublic()
     @Get()
-    async findAll(){
-        return this.comentariosService.findAll()
+    async findAll(@Query('avaliacaoId') avaliacaoId?: string) {
+        if (avaliacaoId) {
+            return this.comentariosService.findAllByAvaliacaoId(+avaliacaoId);
+        }
+        return this.comentariosService.findAll();
     }
-
+    @IsPublic()
     @Get('count/:avaliacaoId')
     async countPorAvaliacao(@Param('avaliacaoId') avaliacaoId: string) {
     const count = await this.comentariosService.countComentariosPorAvaliacao(Number(avaliacaoId));
     return { count };
     }
 
-    @Put(":id")
+    @Patch(":id")
     async update(@Param("id") id: number, @Body() data: ComentarioDto) {
         return this.comentariosService.update(Number(id), data);
 
@@ -38,4 +42,6 @@ export class ComentariosController {
     async getById(@Param("id") id: number){
         return this.comentariosService.getById(Number(id));
     }
+
+    
 }
