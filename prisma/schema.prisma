@@ -3,7 +3,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -21,6 +20,7 @@ model Users {
   avaliacoes Avaliacoes[]
   comentarios Comentarios[]
   fotosrc String?
+  isAdmin Boolean @default(false)
 }
 
 model Professores {

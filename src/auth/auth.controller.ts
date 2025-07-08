@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AuthRequest } from './models/AuthRequest';
 import { IsPublic } from './decorators/is-public.decorator';
+import { AuthenticatedUserDto } from './dto/authenticated-user.dto';
 
 
 
@@ -13,7 +14,7 @@ export class AuthController {
     @Post('login')
     @HttpCode(HttpStatus.OK)
     @UseGuards(LocalAuthGuard)
-    login(@Request() req: AuthRequest){
+    login(@Request() req: {user: AuthenticatedUserDto}){
     console.log(req.user);
 
     return this.authService.login(req.user);

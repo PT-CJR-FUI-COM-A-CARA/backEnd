@@ -13,11 +13,12 @@ export class AuthService {
     constructor(private readonly userService: UsersService, private readonly jwtService: JwtService) {}
 
 
-    login(user: UsersDto): UserToken {
+    login(user: { id: number; email: string; nome: string; isAdmin: boolean }): UserToken {
         const payload: UserPayload = {
             sub: user.id!,
             email: user.email,
             nome: user.nome,
+            isAdmin: user.isAdmin,
         };
         const jwtToken = this.jwtService.sign(payload);
         
