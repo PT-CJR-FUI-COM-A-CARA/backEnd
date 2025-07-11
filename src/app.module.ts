@@ -16,18 +16,48 @@ import { AvaliacoesController } from './avaliacoes/avaliacoes.controller';
 import { AvaliacoesModule } from './avaliacoes/avaliacoes.module';
 import { AvaliacoesService } from './avaliacoes/avaliacoes.service';
 import { MateriasModule } from './materias/materias.module';
-import { NotificacoesModule } from './notificacoes/notificacoes.module'
+import { NotificacoesModule } from './notificacoes/notificacoes.module';
 import { ComentariosModule } from './comentarios/comentarios.module';
 
+// --- ADIÇÕES NECESSÁRIAS ---
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+// -------------------------
+
 @Module({
-  imports: [UsersModule, ProfessoresModule, ComentariosModule, PrismaModule, AuthModule, JwtModule.register({
-    secret: process.env.JWT_SECRET,
-    signOptions: {  expiresIn: '1h'}
-  }), AvaliacoesModule, MateriasModule, NotificacoesModule],
-  controllers: [UsersController, ProfessoresController, AuthController, AvaliacoesController],
-  providers: [UsersService, AuthService, ProfessoresService, {
+  imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'uploads'),
+      serveRoot: '/uploads/',
+    }),
+    UsersModule,
+    ProfessoresModule,
+    ComentariosModule,
+    PrismaModule,
+    AuthModule,
+    JwtModule.register({
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '1h' },
+    }),
+    AvaliacoesModule,
+    MateriasModule,
+    NotificacoesModule,
+  ],
+  controllers: [
+    UsersController,
+    ProfessoresController,
+    AuthController,
+    AvaliacoesController,
+  ],
+  providers: [
+    UsersService,
+    AuthService,
+    ProfessoresService,
+    {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
-    }, AvaliacoesService],
+    },
+    AvaliacoesService,
+  ],
 })
 export class AppModule {}
