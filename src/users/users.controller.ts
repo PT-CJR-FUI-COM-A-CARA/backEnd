@@ -7,16 +7,47 @@ import {
   Delete,
   Patch,
   ParseIntPipe,
+  UseInterceptors, 
+  UploadedFile,   
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express'; 
+import { diskStorage } from 'multer';
 import { UsersDto } from './dto/users.dto';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 import { ChangePasswordDto } from './dto/change-password.dto';
 
+export const editFileName = (req, file, callback) => {
+  const name = file.originalname.split('.')[0].replace(/\s/g, '_'); 
+  const fileExtName = file.originalname.substring(file.originalname.lastIndexOf('.'));
+  const randomName = Array(16)
+    .fill(null)
+    .map(() => Math.round(Math.random() * 16).toString(16))
+    .join('');
+  callback(null, `${name}-${randomName}${fileExtName}`);
+};
+
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
+
+  @Post(':id/upload-photo')
+  @UseInterceptors(
+    FileInterceptor('file', { 
+      storage: diskStorage({
+        destination: './uploads', 
+        filename: editFileName,   
+      }),
+    }),
+  )
+  async uploadPhoto(
+    @Param('id', ParseIntPipe) id: number,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    const photoUrl = `/uploads/${file.filename}`; 
+    return this.userService.update(id, { fotosrc: photoUrl });
+  }
 
   @IsPublic()
   @Post()
@@ -48,8 +79,6 @@ export class UsersController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateData: UpdateUserDto,
   ) {
-        console.log(`--- TENTANDO ATIVAR CHANGE user com ID: ${id} ---`);
-
     return this.userService.update(id, updateData);
   }
 
