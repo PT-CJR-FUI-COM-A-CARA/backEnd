@@ -7,12 +7,18 @@ import { format } from 'date-fns';
 @Injectable()
 export class AvaliacoesService {
     constructor(private prisma: PrismaService) {}
-    async create(data: AvaliacoesDto){
-        const avaliacao = await this.prisma.avaliacoes.create({
-            data: data
-        });
-        return avaliacao;
-    }
+    async create(userId: number, data: AvaliacoesDto) {
+    const { avaliacao, materia, profId } = data;
+
+    return this.prisma.avaliacoes.create({
+      data: {
+        avaliacao,
+        materia,
+        profId,
+        userId: userId, 
+      },
+    });
+  }
     
     async findAll(){
         return await this.prisma.avaliacoes.findMany();

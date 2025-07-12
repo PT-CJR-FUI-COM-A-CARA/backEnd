@@ -7,18 +7,24 @@ import {
   Delete,
   Patch,
   ParseIntPipe,
+  Request,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { AvaliacoesService } from './avaliacoes.service';
 import { AvaliacoesDto } from './dto/avaliacoes.dto';
 import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 import { AvaliacoesDtoUpdate } from './dto/update-avaliacoes.dto';
+import { JwtAuthGuard } from '@/auth/guards/jwt-auth.guard';
 
 @Controller('avaliacoes')
 export class AvaliacoesController {
     constructor(private readonly avaliacoesService: AvaliacoesService) {}
+    @UseGuards(JwtAuthGuard)
     @Post()
-    async create(@Body() data: AvaliacoesDto) {
-        return this.avaliacoesService.create(data)
+    async create(@Request() req, @Body() data: AvaliacoesDto) {
+        const userId = req.user.id; 
+        return this.avaliacoesService.create(userId, data)
     }
     @IsPublic()
     @Get()
