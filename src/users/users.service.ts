@@ -1,9 +1,10 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { UsersDto } from './dto/users.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as bcrypt from 'bcrypt';
 import { ChangePasswordDto } from './dto/change-password.dto';
+import { DeleteAccountDto } from './dto/delete-account.dto';
 
 @Injectable()
 export class UsersService {
@@ -103,5 +104,42 @@ export class UsersService {
         return this.prisma.users.findUnique({
             where: {email},
         });
+    }
+
+    async deleteUserAccount(id: number, deleteAccountDto: DeleteAccountDto) {
+        const user = await this.prisma.users.findUnique({
+            where: { id },
+            });
+
+        if (!user) {
+            throw new NotFoundException('Usuário não encontrado');
+        }
+
+        const isPasswordValid = await bcrypt.compare(
+            deleteAccountDto.senha,
+            user.senha,
+        );
+
+        if (!isPasswordValid) {
+        throw new UnauthorizedException('Senha incorreta.');
+        }
+
+        
+        await this.prisma.$transaction([
+            
+            this.prisma.comentarios.deleteMany({
+                where: { usersId: id },
+            }),
+            
+            this.prisma.avaliacoes.deleteMany({
+                where: { userId: id },
+            }),
+
+            this.prisma.users.delete({
+                where: { id },
+            }),
+        ]);
+
+        return { message: 'Conta, avaliações e comentários associados foram excluídos com sucesso.' };
     }
 }
