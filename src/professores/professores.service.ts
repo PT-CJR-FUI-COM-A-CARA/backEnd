@@ -1,18 +1,46 @@
 import { PrismaService } from 'src/database/prisma.service';
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { ProfessoresDto } from './dto/professores.dto';
 import { ProfessoresDtoUpdate } from './dto/update-professores.dto';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class ProfessoresService {
     constructor(private prisma: PrismaService) {}
-    async create(data: ProfessoresDto) {
-        const professor = await this.prisma.professores.create({
-            data: data,
-        });
 
-        return professor;
+
+    async create(data: ProfessoresDto, file?: Express.Multer.File) {
+    const { nome, departamento, materias } = data;
+    const fotoPath = file ? `/uploads/${file.filename}` : null;
+
+    try {
+      const materiasParsed = typeof materias === 'string'
+        ? JSON.parse(materias as any)
+        : materias;
+
+      return await this.prisma.professores.create({
+        data: {
+          nome,
+          departamento,
+          fotosrc: fotoPath, 
+          materias: {
+            connectOrCreate: materiasParsed.map((nomeDaMateria: string) => ({
+              where: { nome: nomeDaMateria },
+              create: { nome: nomeDaMateria },
+            })),
+          },
+        },
+        include: {
+          materias: true,
+        },
+      });
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+        throw new ConflictException(`Um professor com o nome "${nome}" já existe.`);
+      }
+      throw error;
     }
+  }
     
     async findAll(){
         return await this.prisma.professores.findMany({

@@ -57,7 +57,7 @@ model Comentarios {
 
 model Materias {
   id     Int            @id @default(autoincrement())
-  nome   String
+  nome   String         @unique
   prof   Professores[]
 }
 

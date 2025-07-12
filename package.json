@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "build": "nest build",
+    "build": "nest build && copyfiles -u 1 uploads/**/* dist/uploads",
     "postbuild": "copyfiles -u 2 src/generated/**/* dist/src",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
@@ -38,6 +38,7 @@
     "class-validator": "^0.14.2",
     "date-fns": "^4.1.0",
     "dotenv": "^16.5.0",
+    "multer": "^2.0.1",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
