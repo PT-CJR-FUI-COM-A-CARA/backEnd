@@ -17,6 +17,7 @@ import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 import { ChangePasswordDto } from './dto/change-password.dto';
+import { DeleteAccountDto } from  './dto/delete-account.dto';
 
 export const editFileName = (req, file, callback) => {
   const name = file.originalname.split('.')[0].replace(/\s/g, '_'); 
@@ -86,4 +87,12 @@ export class UsersController {
   async delete(@Param('id', ParseIntPipe) id: number) {
     return this.userService.delete(Number(id));
   }
+
+  @Post('delete-account/:id')
+  async deleteAccount(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() deleteAccountDto: DeleteAccountDto,
+    ) {
+    return this.userService.deleteUserAccount(id, deleteAccountDto);
+    }
 }
